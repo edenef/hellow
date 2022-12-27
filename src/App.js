@@ -1,7 +1,10 @@
+import { useState } from 'react';
 import './App.css';
 
 function App() {
-  const userName = [
+  const [Name, setName] =useState('')
+  const [Email, setEmail] =useState('')
+  const [userList,setuserList] = useState([
     {
       "id": 1,
       "name": "Leanne Graham",
@@ -232,31 +235,53 @@ function App() {
         "bs": "target end-to-end models"
       }
     }
-  ]
- 
+  ])
+
+  function handleAddName(e){
+  setName(e.target.value)
+}
+  function handleAddEmail(e){
+  setEmail(e.target.value)
+  console.log(Email)
+}
+
+ function AddItemToList(){
+  let addRow={
+    name: Name,
+    email: Email
+  }
+
+ setuserList([...userList,addRow])
+    
+  }
   return (
     <div className="App">
     <h2> List of User Name</h2>
-    <table>
-      <tr>
-        <th>Name</th>
-        <th>Email</th>
-      </tr>
-      <td>
-        {userName.map( 
-      userName=> ( <tr> {userName.name}</tr>))
+    <p>Enter Name: <input className='inputcss' value={Name} onChange= {handleAddName}/></p>
+     <p>Enter Email: <input className='inputcss' value={Email} onChange= {handleAddEmail}/></p>
+     <p><button onClick={AddItemToList} >Add to list</button></p>
+     <p><table className='inputcss'>
+     <tr>
+    <th>Name</th>
+    <th>Email</th>
+    </tr>
+    <td>
+      {
+        userList.map(
+          user => (   <tr>{user.name}</tr> ))
+          
         }
       </td>
       <td>
-        {userName.map( 
-      userName=> ( <tr> {userName.email}</tr>))
-        }
-      </td>
-     
-       
-    </table>    
+        {userList.map(
+          user => (   <tr>{user.email}</tr> ))}
+</td>
+</table> </p>      
+        
+      
 
     </div>
-);
+  );
 }
+
 export default App;
